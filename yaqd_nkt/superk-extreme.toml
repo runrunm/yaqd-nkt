@@ -1,0 +1,47 @@
+protocol = "superk-extreme"
+doc = ""
+traits = ["has-position", "has-limits", "is-discrete", "uses-serial", "uses-uart", "is-daemon"]
+
+[links]
+source = "https://github.com/yaq-project/yaqd-nkt"
+bugtracker = "https://github.com/yaq-project/yaqd-nkt/-/issues"
+
+[installation]
+PyPI = "https://pypi.org/project/yaqd-nkt"
+
+[config]
+
+[config.identifiers]
+default = {"on" = 3, "off" = 0}
+
+[config.system_type]
+doc = "Used to differentiate systems (old/new) with minor differences. 0: SuperK Extreme, 1: SuperK Fianium."
+type = "int"
+default = 0  # SuperK Extreme
+
+[config.setup]
+doc = "Operation mode of SuperK Extreme laser. Integer from 0 to 4. 0: Constant current mode, 1: Constant power mode, 2: Externally modulated current mode, 3: Externally modulated power mode, 4: External feedback mode (Power Lock)."
+type = "int"
+default = 1  # Constant power mode
+
+[config.power_level]
+doc = "Power level setpoint in tenths of a percent (permille)."
+type = "int"
+default = 170  # 17%
+
+[config.current_level]
+doc = "Current level setpoint in tenths of a percent (permille)."
+type = "int"
+default = 0
+
+[config.nim_delay]
+doc = "On systems with NIM trigger output, the delay of this trigger signal can be adjusted with the NIM delay register. Integer from 0 to 1023. The range is 0-9.2 ns."
+type = "int"
+default = 0
+
+[state]
+
+[state.emission]
+doc = "Laser emission state."
+type = "boolean"
+default = false
