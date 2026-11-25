@@ -1,6 +1,7 @@
 {
     "config": {
         "baud_rate": {
+            "default": 115200,
             "origin": "uses-uart",
             "type": "int"
         },
@@ -26,16 +27,6 @@
                 "type": "map",
                 "values": "double"
             }
-        },
-        "limits": {
-            "default": [
-                -Infinity,
-                Infinity
-            ],
-            "doc": "Configuration limits are strictly optional.",
-            "items": "double",
-            "origin": "has-limits",
-            "type": "array"
         },
         "log_level": {
             "default": "info",
@@ -82,18 +73,6 @@
             "default": 0,
             "doc": "On systems with NIM trigger output, the delay of this trigger signal can be adjusted with the NIM delay register. Integer from 0 to 1023. The range is 0-9.2 ns.",
             "type": "int"
-        },
-        "out_of_limits": {
-            "default": "closest",
-            "doc": "Control behavior of daemon when set_position is given a value outside of limits.",
-            "name": "out_of_limits",
-            "origin": "has-limits",
-            "symbols": [
-                "closest",
-                "ignore",
-                "error"
-            ],
-            "type": "enum"
         },
         "port": {
             "doc": "TCP port for daemon to occupy.",
@@ -182,15 +161,6 @@
                 "string"
             ]
         },
-        "get_limits": {
-            "doc": "Get daemon limits.Limits will be the <a href='https://en.wikipedia.org/wiki/Intersection_(set_theory)'>intersection</a> of config limits and driver limits (when appliciable).",
-            "origin": "has-limits",
-            "request": [],
-            "response": {
-                "items": "double",
-                "type": "array"
-            }
-        },
         "get_position": {
             "doc": "Get current daemon position.",
             "origin": "has-position",
@@ -214,6 +184,11 @@
                 "type": "map",
                 "values": "double"
             }
+        },
+        "get_power": {
+            "doc": "Get laser power.",
+            "request": [],
+            "response": "int"
         },
         "get_state": {
             "doc": "Get version of the running daemon",
@@ -242,17 +217,6 @@
                 ]
             }
         },
-        "in_limits": {
-            "doc": "Check if a given position is within daemon limits.",
-            "origin": "has-limits",
-            "request": [
-                {
-                    "name": "position",
-                    "type": "double"
-                }
-            ],
-            "response": "boolean"
-        },
         "set_identifier": {
             "doc": "Set using an identifier. Returns new destination.",
             "origin": "is-discrete",
@@ -271,6 +235,16 @@
                 {
                     "name": "position",
                     "type": "double"
+                }
+            ],
+            "response": "null"
+        },
+        "set_power": {
+            "doc": "Set laser power.",
+            "request": [
+                {
+                    "name": "power",
+                    "type": "int"
                 }
             ],
             "response": "null"
@@ -304,7 +278,7 @@
             "control_kind": "hinted",
             "dynamic": true,
             "getter": "get_destination",
-            "limits_getter": "get_limits",
+            "limits_getter": null,
             "options_getter": null,
             "record_kind": "data",
             "setter": "set_position",
@@ -315,7 +289,7 @@
             "control_kind": "hinted",
             "dynamic": true,
             "getter": "get_position",
-            "limits_getter": "get_limits",
+            "limits_getter": null,
             "options_getter": null,
             "record_kind": "data",
             "setter": null,
@@ -342,20 +316,6 @@
             "origin": "has-position",
             "type": "double"
         },
-        "emission": {
-            "default": false,
-            "doc": "Laser emission state.",
-            "type": "boolean"
-        },
-        "hw_limits": {
-            "default": [
-                -Infinity,
-                Infinity
-            ],
-            "items": "double",
-            "origin": "has-limits",
-            "type": "array"
-        },
         "position": {
             "default": NaN,
             "origin": "has-position",
@@ -372,7 +332,6 @@
         }
     },
     "traits": [
-        "has-limits",
         "has-position",
         "is-daemon",
         "is-discrete",
