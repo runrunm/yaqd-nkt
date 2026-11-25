@@ -42,3 +42,14 @@ default = 0
 [config.baud_rate]
 type = "int"
 default = 115200
+
+
+[messages]
+
+[messages.get_power]
+doc = "Get laser power."
+response = "int"
+
+[messages.set_power]
+doc = "Set laser power."
+request = [{"name"="power", "type"="int"}]
