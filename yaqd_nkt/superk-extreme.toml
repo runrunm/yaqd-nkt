@@ -39,9 +39,6 @@ doc = "On systems with NIM trigger output, the delay of this trigger signal can 
 type = "int"
 default = 0
 
-[state]
-
-[state.emission]
-doc = "Laser emission state."
-type = "boolean"
-default = false
+[config.baud_rate]
+type = "int"
+default = 115200
